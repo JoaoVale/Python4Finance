@@ -1,0 +1,43 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+plt.style.use('seaborn')
+
+import yfinance as yf
+
+security = yf.Ticker('voo')
+
+#stockinfo = msft.info
+
+#print(type(msft.dividends))
+
+#df = msft.dividends
+
+#data = df.resample('Y').sum()
+#data = data.reset_index()
+#data['Year'] = data['Date'].dt.year
+
+#plt.figure()
+#plt.bar(data['Year'], data['Dividends'])
+#plt.ylabel('Dividend Yield ($)')
+#plt.xlabel('Year')
+#plt.title('Microsoft Dividend History')
+#plt.xlim(2002,2022)
+#plt.show()
+
+securities = ['msft', 'appl', 'tsla', 'jnj', 'dis']
+
+df = pd.DataFrame()
+
+print(security.history(period='max')) #type=dataframe
+
+today = datetime.now().date().strftime("%Y-%m-%d")
+
+for security in securities:
+ df[security] = yf.Ticker(security).history(start="2007-01-01", end=today).Close
+
+plt.figure()
+plt.plot(df)
+plt.ylabel('Price ($)')
+plt.xlabel('Year')
+plt.show()
